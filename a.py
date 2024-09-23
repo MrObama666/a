@@ -17,7 +17,8 @@ logging.basicConfig(filename="websocket_errors.log", level=logging.ERROR)
 guild_id = "876880568560803900"  # ID do servidor
 chid = "1244702411935711232"  # ID do canal
 channel_name = "DISCORD BRASIL CALL PUBLICA"  # Nome do canal
-tokenlist = open("tokens.txt").read().splitlines()
+tokenlist_path = os.path.join(os.getcwd(), "tokens.txt")  # Usa caminho completo para o arquivo de tokens
+tokenlist = open(tokenlist_path).read().splitlines()
 
 # Limita o número de threads para um valor seguro
 executor = ThreadPoolExecutor(max_workers=100)
@@ -29,7 +30,7 @@ RESTART_INTERVAL = 120
 
 # Função para limpar o console
 def clear_console():
-    os.system('cls' if os.name == 'nt' else 'clear')
+    os.system('cls' if os.name == 'nt' else 'clear')  # 'clear' já funciona em Linux
 
 # Função para exibir o cabeçalho do programa
 def print_header():
@@ -56,7 +57,7 @@ def connect_to_voice(ws, token):
             "d": {
                 "token": token,
                 "properties": {
-                    "$os": "windows",
+                    "$os": "linux",  # Altera para Linux
                     "$browser": "Discord",
                     "$device": "desktop"
                 }
@@ -145,7 +146,7 @@ def log_token_connection(token_index):
 # Função para reiniciar o programa
 def restart_program():
     print("\033[93m[REINÍCIO] › Reiniciando o programa após 2 minutos...\033[0m")
-    os.execv(sys.executable, ['python'] + sys.argv)
+    os.execv(sys.executable, ['python3'] + sys.argv)  # Altera para python3 no Linux
 
 # Função para iniciar a reconexão de todos os tokens
 def start_tokens():
